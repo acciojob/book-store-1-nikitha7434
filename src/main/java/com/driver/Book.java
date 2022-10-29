@@ -6,7 +6,7 @@ public class Book {
 
      private String name;
 
-     private String genre;
+     private  String genre;
      
      private String author;
 
@@ -44,7 +44,7 @@ public class Book {
         this.genre = genre;
     }
 
-    public String getAuthor() {
+    public  String getAuthor() {
         return author;
     }
 

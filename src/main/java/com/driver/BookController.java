@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("books")
+//@RequestMapping("books")
 public class BookController {
 
     private List<Book> bookList;
@@ -47,28 +47,62 @@ public class BookController {
     @PostMapping("/create-book")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         // Your code goes here.
+     bookList.add(book);
+
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
 
     // get request /get-book-by-id/{id}
     // pass id as path variable
     // getBookById()
+    @GetMapping("/get-book-by-id/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable("id")int id){
+
+        return new ResponseEntity<>(bookList.get(id),HttpStatus.ACCEPTED);
+    }
 
     // delete request /delete-book-by-id/{id}
     // pass id as path variable
     // deleteBookById()
-
+@DeleteMapping("/delete-book-by-id/{id}")
+    public void deleteBookById(@PathVariable("id")int id){
+        bookList.remove(id);
+}
     // get request /get-all-books
     // getAllBooks()
+@GetMapping("/get-all-books")
+    public ResponseEntity<List<Book>> getAllBooks(){
 
+        return new ResponseEntity<>(bookList,HttpStatus.FOUND);
+}
     // delete request /delete-all-books
     // deleteAllBooks()
+    @DeleteMapping("/delete-all-books")
+    public ResponseEntity deleteAllBooks(){
+        bookList.clear();
+        return new ResponseEntity<>("Done",HttpStatus.ACCEPTED);
+    }
 
     // get request /get-books-by-author
     // pass author name as request param
     // getBooksByAuthor()
 
+
+    @GetMapping("/get-books-by-author")
+    public ResponseEntity<String> getBooksByAuthor(@RequestParam("author") String author){
+              Book books =new Book();
+              String name =books.getAuthor()+books.getName();
+        return new ResponseEntity<>("sucessfull",HttpStatus.ACCEPTED);
+    }
+@GetMapping("/get-books-by-genre")
+    public ResponseEntity<String> getBooksByGenre(@RequestParam("genre")String genre){
+
+    Book books =new Book();
+String name =books.getGenre()+books.getGenre();
+    return new ResponseEntity<>("sucessfull",HttpStatus.OK);
+}
     // get request /get-books-by-genre
     // pass genre name as request param
-    // getBooksByGenre()
+    //getBooksByGenre()
+
 }
